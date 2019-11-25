@@ -8,15 +8,22 @@ class App extends Component {
         this.state = {
             inputValue: ''
         }
+        // var valueToPost = '';
+        this.handleClick = this.handleClick.bind(this);
     }
 
     handleClick(){
-        console.log(this.state.input)
+        if (this.refs.myInput !== null){
+            var input = this.refs.myInput;
+            var inputValue = input.value;
+            this.valueToPost = inputValue;
+            console.log(this.valueToPost);
+        }
     }
     render(){
         return (
             <div className="App">
-                <input value={this.state.eventValue} />
+                <input ref="myInput" />
                 <button value="calculate" onClick={this.handleClick} />
             </div>
         )
