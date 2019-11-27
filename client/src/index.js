@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
+import axios from 'axios'
 
 class App extends Component {
     constructor(props){
@@ -18,13 +19,25 @@ class App extends Component {
             var inputValue = input.value;
             this.valueToPost = inputValue;
             console.log(this.valueToPost);
+            axios.post('localhost:8081/home', this.valueToPost)
+                .then(function(response){
+                    console.log(response);
+                }).catch(function(error){
+                    console.log(error);
+                })
         }
+    }
+    showResponse(res){
+        console.log(res);
+    }
+    showError(error){
+        console.log(error);
     }
     render(){
         return (
             <div className="App">
                 <input ref="myInput" />
-                <button value="calculate" onClick={this.handleClick} />
+                <button text="calculate" onClick={this.handleClick} />
             </div>
         )
     }
