@@ -1,16 +1,15 @@
-function a(){
+function a(request){
     const cardLen = 5;
     const cardColorCnt = 4;
     const cardNumberCnt = 13;
-    var request = [];
+    // var request = [];
     // var cardsPicked = request.trim().split(' ');
-    var cardsPicked = ['H3', 'D3', 'S3', 'H6', 'H5'];
     var pickedNumbers = [];
     var pickedColors = [];
     var result = '';
     for (let i = 0; i < cardLen; i++){
-        pickedNumbers[i] = parseInt(cardsPicked[i].match(/\d+/g));
-        pickedColors[i] = String(cardsPicked[i].match(/[a-z]/gi));
+        pickedNumbers[i] = parseInt(request[i].match(/\d+/g));
+        pickedColors[i] = String(request[i].match(/[a-z]/gi));
     }
     console.log(pickedNumbers);
     // console.log(pickedColors);
@@ -77,18 +76,4 @@ function a(){
         console.log(result);
     }
     check();
-}
-
-
-
-module.exports = {
-    async post(req, res){
-        try{
-            console.log('post!');
-            res.send({init: req.body, handName: a.result});
-        }
-        catch{
-            console.log(error);
-        }
-    }
 }
