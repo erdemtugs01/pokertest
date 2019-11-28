@@ -60,48 +60,63 @@ function a(request){
     function check(){
         var cntIfFlush=0;
         var cntIfStraight = 0;
-        for (let i = 0; i < cardLen-1; i++){
-            if (pickedNumbers[i] === pickedNumbers[i+1]){
-                if (pickedNumbers[i+1] === pickedNumbers[i+2]){
-                    if (pickedNumbers[i+2] === pickedNumbers[i+3]){
-                        result += 'Four Of A Kind';
-                    }
-                    else if (pickedNumbers[i+1] !== pickedNumbers[i+3] && pickedNumbers[i+3] === pickedNumbers[i+4]){
-                        // console.log('FullHouse');
-                        result += 'FullHouse';
-                    }
-                        // console.log('ThreeOfAKind');
-                        result += 'Three Of A Kind';
-                }
-                if (pickedNumbers[i+2] === pickedNumbers[i+3] && pickedNumbers[i+1] !== pickedNumbers[i+2]){
-                    console.log('TwoPair');
-                    result += 'Two Pair';
-                }
-                else
-                    console.log('Pair');
-                    result += 'Pair';
+        var pair=0;
+        for (let i = 0; i < cardLen - 1; i++){
+            if (pickedNumbers[i] === pickedNumbers[i+1] && pickedNumbers[i+1] === pickedNumbers[i+2] && pickedNumbers[i+2] === pickedNumbers[i+3]){
+                console.log('fourofakind');
+                result = 'Four of a kind';
+                break;
             }
-            
-            if (pickedNumbers[i] - pickedNumbers[i+1] === -1){
+            else if (pickedNumbers[i] === pickedNumbers[i+1] && pickedNumbers[i+1] === pickedNumbers[i+2] && pickedNumbers[i+3] === pickedNumbers[i+4] && pickedNumbers[i+2]!==pickedNumbers[i+3]){
+                result = 'fullhouse';
+                break;
+            }
+            else if (pickedNumbers[i] === pickedNumbers[i+1] && pickedNumbers[i+1] !== pickedNumbers[i+2] && pickedNumbers[i+3] === pickedNumbers[i+4] && pickedNumbers[i+2]===pickedNumbers[i+3]){
+                result = 'fullhouse';
+                break;
+            }
+            else if (pickedNumbers[i] === pickedNumbers[i+1] && pickedNumbers[i+1] === pickedNumbers[i+2]){
+                console.log('triple');
+                result = 'three of a kind';
+                break;
+            }
+            else if (pickedNumbers[i] === pickedNumbers[i+1] && pickedNumbers[i+2] === pickedNumbers[i+3] && pickedNumbers[i+2] !== pickedNumbers[i+1]){
+                pair++;
+            }
+            else if (pickedNumbers[i] === pickedNumbers[i+1]){
+                if (pickedNumbers[i+2] === pickedNumbers[i+3] || pickedNumbers[i+3] === pickedNumbers[i+4]){
+                    result = 'twopair'
+                    break;
+                }
+                else 
+                {
+                    result = 'onepair'; break;
+                }
+            }
+            else if (pickedNumbers[i+1] - pickedNumbers[i] === 1){
                 cntIfStraight++;
+                if (pickedColors[i] === pickedColors[i+1]){
+                    cntIfFlush++;
+                }
             }
-            if (cntIfStraight === 4){
-                result += 'Straight';
-                // console.log('Straight');
-            }
-            if (pickedColors[i] === pickedColors[i+1]){
+            else if (pickedColors[i] === pickedColors[i+1]){
                 cntIfFlush++;
             }
-            if (cntIfFlush === 4){
-                result += 'Flush'
-                // console.log('Flush');
-            }
-            // else 
-            // result += 'High Card';
         }
-        
+        if (cntIfStraight === 4){
+            result = 'Straight';
+            if (cntIfFlush === 4){
+                result += 'Flush';
+            }
+        }
+        else if (cntIfFlush === 4){
+            result = 'Flush';
+        }
+        // else result = 'High Card';
+        console.log(cntIfFlush);
     }
     check();
+    
     console.log('result' + result);
     return result;
 }
